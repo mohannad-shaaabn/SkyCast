@@ -1,37 +1,89 @@
+import { useState, useEffect } from "react";
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
+
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const notyf = new Notyf();
+
+  useEffect(() => {
+    const subscribed = localStorage.getItem("subscribed");
+    if (subscribed) {
+      setIsSubscribed(true);
+    }
+  }, []);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    localStorage.setItem("subscribed", "true");
+    setIsSubscribed(true);
+    notyf.success("تمت العملية بنجاح!");
+    setEmail("");
+  };
+
+  const socialLinks = [
+    { name: "instagram", url: "https://www.instagram.com/web_site_creator?igsh=bHlrcHh5c2lmdWJp&utm_source=qr" },
+    { name: "linkedin", url: "https://www.linkedin.com/in/mohannad-shaaban-59b47b371/" },
+    { name: "github", url: "https://github.com/mohannad-shaaabn" },
+  ];
+
   return (
-    <div className='footer text-white min-h-44 py-12 px-36' style={{ backgroundColor: '#262936' }}>
-      <div className='flex flex-row items-center justify-between mx-auto '>
-        <form className="w-[60%]">
-          <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-          <div className="relative">
-            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-              </svg>
-            </div>
-            <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your email to subscribe..." required />
-            <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Subscribe</button>
+    <footer className="bg-[#262936] text-white py-12">
+      <div className="max-w-screen-xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center gap-6">
+          {/* Subscribe Form */}
+          <div className="w-full md:w-2/3">
+            {isSubscribed ? (
+              <p className="text-active font-semibold">
+                You are already subscribed!
+              </p>
+            ) : (
+              <form onSubmit={handleSubscribe}>
+                <div className="relative">
+                  <input
+                    type="email"
+                    placeholder="Enter your email to subscribe..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full p-4 pr-32 rounded-full text-sm text-gray-900 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-active text-white px-5 py-2 rounded-full text-sm hover:opacity-90 transition"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
-        </form>
-        <div className="flex gap-4 w-[30%] justify-end ">
-          <div className="w-10 h-10 flex items-center justify-center bg-brandblue text-blue-600 rounded-full shadow-md hover:bg-active hover:text-white cursor-pointer">
-            <i className="fa-brands fa-facebook-f text-lg"></i>
-          </div>
-          <div className="w-10 h-10 flex items-center justify-center bg-brandblue text-blue-600 rounded-full shadow-md hover:bg-active hover:text-white cursor-pointer">
-            <i className="fa-brands fa-twitter"></i>
-          </div>
-          <div className="w-10 h-10 flex items-center justify-center bg-brandblue text-blue-600 rounded-full shadow-md hover:bg-active hover:text-white cursor-pointer">
-            <i className="fa-brands fa-google-plus-g"></i>
-          </div>
-          <div className="w-10 h-10 flex items-center justify-center bg-brandblue text-blue-600 rounded-full shadow-md hover:bg-active hover:text-white cursor-pointer">
-            <i className="fa-brands fa-pinterest"></i>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 justify-center md:justify-end w-full md:w-1/3">
+            {socialLinks.map((icon, index) => (
+              <a
+                key={index}
+                href={icon.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center bg-brandblue text-blue-500 rounded-full hover:bg-active hover:text-white transition cursor-pointer"
+              >
+                <i className={`fa-brands fa-${icon.name}`}></i>
+              </a>
+            ))}
           </div>
         </div>
+
+        {/* Bottom Text */}
+        <div className="mt-8 text-center md:text-left">
+          <p className="text-sm text-gray-400">
+            © 2025 Mohannad Shaaban. Designed by Themezy. All rights reserved
+          </p>
+        </div>
       </div>
-      <div className=" mt-5">
-        <h5 className='text-sm text-gray-400'>Copyright 2014 Company name. Designed by Themezy. All rights reserved</h5>
-      </div>
-    </div>
+    </footer>
   );
 }

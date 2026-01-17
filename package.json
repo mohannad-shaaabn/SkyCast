@@ -10,12 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@tanstack/react-query": "^5.79.0",
     "axios": "^1.9.0",
     "flowbite": "^3.1.2",
+    "ldrs": "^1.1.9",
+    "notyf": "^3.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-loading-skeleton": "^3.5.0",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
