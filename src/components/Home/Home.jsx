@@ -78,7 +78,7 @@ export default function Home() {
       style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/45 z-0"></div>
+      <div className="absolute inset-0 bg-black/45 z-0 pointer-events-none"></div>
 
       {/* Content */}
       <div className="relative z-10">
